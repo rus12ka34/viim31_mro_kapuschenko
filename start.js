@@ -1,11 +1,55 @@
 const fs = require('fs');
-const data = fs.readFileSync('./data.txt', { encoding: 'utf8', flag: 'r' });
+const commonData = fs.readFileSync('date/commonData.txt', { encoding: 'utf8', flag: 'r' });
+const clasters = fs.readFileSync('date/clasters.txt', { encoding: 'utf8', flag: 'r' });
 
-const dataObj = JSON.parse(data);
+const arr = JSON.parse(clasters);
+const common = JSON.parse(commonData);
+
+const getRandomArbitrary = (min, max) => {
+    return Math.random() * (max - min) + min;
+}
+
+const checkPoint = ({ x1, x2, R, setX, setY }) => {
+    return (Math.pow((setX - x1), 2) + Math.pow((setY - x2), 2)) <= Math.pow(R, 2);
+};
+
+let index = 0;
+let points = [];
+while (index <= 10000) {
+
+    points.push({ x1: getRandomArbitrary(0, 10).toFixed(2), x2: getRandomArbitrary(0, 10).toFixed(2) })
+
+    ++index;
+}
+
+
+let verificationPoints = []
 
 
 
+arr.map((classItem, index) => {
+    const { x1, x2, R } = classItem;
+
+    verificationPoints.push({
+        arrItem: index,
+        points: []
+    })
+
+    points.map((item) => {
+        const { x1: setX, x2: setY } = item;
+
+        if (checkPoint({ x1, x2, R, setX, setY })) {
+            verificationPoints[index].points.push({ setX, setY })
+            // console.log('true >>> ', item)
+        }
+        // else console.log('false >>> ', item)
+    });
+});
+
+let data = JSON.stringify(verificationPoints);
+fs.writeFileSync('result.json', data);
 
 
+// console.log(verificationPoints);
 
-console.log();
+
