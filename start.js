@@ -10,8 +10,11 @@ const getRandomArbitrary = (min, max) => {
 }
 
 
-const checkPoint = ({ x1, x2, R, setX, setY }) => {
-    return (Math.pow((setX - x1), 2) + Math.pow((setY - x2), 2)) <= Math.pow(R, 2);
+const checkPoint = ({ x1, x2, R, setX, setY, a, b }) => {
+
+    return ((Math.pow(setX, 2) / Math.pow(a, 2))) + ((Math.pow(setY, 2) / Math.pow(b, 2))) <= 1
+
+    // return (Math.pow((setX - x1), 2) + Math.pow((setY - x2), 2)) <= Math.pow(R, 2);
 };
 
 // генерация точек
@@ -28,7 +31,7 @@ let verificationPoints = []
 
 
 arr.map((classItem, index) => {
-    const { x1, x2, R } = classItem;
+    const { x1, x2, R, a, b } = classItem;
 
     verificationPoints.push({
         arrItem: index,
@@ -38,7 +41,7 @@ arr.map((classItem, index) => {
     points.map((item) => {
         const { x1: setX, x2: setY } = item;
 
-        if (checkPoint({ x1, x2, R, setX, setY })) {
+        if (checkPoint({ x1, x2, R, setX, setY, a, b })) {
             verificationPoints[index].points.push({ setX, setY })
         }
         // else console.log('false >>> ', item)
