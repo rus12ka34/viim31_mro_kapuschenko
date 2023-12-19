@@ -74,14 +74,75 @@ context.stroke();
 __features.map((item, i) => {
     const [me_x, me_y] = item;
 
-    console.log(me_x, me_y);
-
     context.fillStyle = __labels[i] === 1 ? '#ff0000' : '#4ef300';
     context.fillRect(me_x*100, 1000 - me_y*100, 4, 4);
 })
 
 const buffer = canvas.toBuffer("image/png");
 fs.writeFileSync("image3.png", buffer);
+
+
+
+
+function minkowski_distance(x, y, p) {
+    if (x?.length !== y?.length) {
+        throw new Error('Векторы должны иметь одинаковую длину');
+    }
+    let distance = 0;
+    for (let i in x) {
+        distance += Math.abs(x[i] - y[i]) ** p;
+        distance = distance ** (1/p)
+    }
+    return distance;
+}
+
+function euclidean_distance(x, y) {
+    if (x?.length !== y?.length) {
+        throw new Error('Векторы должны иметь одинаковую длину');
+    }
+    let distance = 0;
+    for (let i in x) {
+        distance += math.sqrt(math.sum((x[i] - y[i]) ** 2))
+    }
+    return distance;
+}
+
+function manhattan_distance(x, y) {
+    if (x?.length !== y?.length) {
+        throw new Error('Векторы должны иметь одинаковую длину');
+    }
+    let distance = 0;
+    for (let i in x) {
+        distance += math.sum(Math.abs(x[i] - y[i]))
+    }
+    return distance;
+}
+
+function canberra_distance(x, y) {
+    if (x?.length !== y?.length) {
+        throw new Error('Векторы должны иметь одинаковую длину');
+    }
+    let distance = 0;
+    for (let i in x) {
+        distance += math.sum(Math.abs(x[i] - y[i])) / (Math.abs(x[i]) - Math.abs(y[i]));
+    }
+    return distance;
+}
+
+let resulted = null;
+
+resulted = canberra_distance(__features[0], __features[1]);
+console.log(`Расстояние Канберры между векторами ${__features[0]} и ${__features[1]}: ${resulted}`);
+
+resulted = manhattan_distance(__features[0], __features[1])
+console.log(`Манхэттенское расстояние между векторами ${__features[0]} и ${__features[1]}: ${resulted}`)
+
+resulted = euclidean_distance(__features[0], __features[1])
+console.log(`Евклидово расстояние между векторами ${__features[0]} и ${__features[1]}: ${resulted}`)
+
+p_value = 3
+resulted = minkowski_distance(__features[0], __features[1], p_value)
+console.log(`Метрика Минковского между векторами ${__features[0]} и ${__features[1]} с параметром ${p_value}: ${resulted}`);
 
 
 
