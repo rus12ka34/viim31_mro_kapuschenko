@@ -75,9 +75,6 @@ const context = canvas.getContext("2d");
 context.fillStyle = "#cccccc";
 context.fillRect(0, 0, width, height);
 
-
-
-
 context.moveTo(xArr[0], 1000 - yArr[0]);
 context.lineTo(xArr[1], 1000 - yArr[1]);
 
