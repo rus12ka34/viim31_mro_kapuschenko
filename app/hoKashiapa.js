@@ -1,5 +1,5 @@
 const fs = require('fs');
-const result = fs.readFileSync('result.json', { encoding: 'utf8', flag: 'r' });
+const result = fs.readFileSync('../results/result.json', { encoding: 'utf8', flag: 'r' });
 const resultJson = JSON.parse(result);
 const { createCanvas } = require('canvas');
 
@@ -53,6 +53,16 @@ console.log('w >>> ', w);
 console.log('b >>> ', b);
 
 
+let xArr = [0, 1000];
+let yArr = [];
+
+xArr.forEach((x) => {
+    yArr.push(-(w[0] * x + b) / w[1]);
+})
+
+console.log('xArr >>> ', xArr);
+console.log('yArr >>> ', yArr);
+
 
 // рисуем линию
 
@@ -65,8 +75,11 @@ const context = canvas.getContext("2d");
 context.fillStyle = "#cccccc";
 context.fillRect(0, 0, width, height);
 
-context.moveTo(0, 1000 - ((-w[0]) * 10));
-context.lineTo(1000, 1000 - ((-w[1]) * 10));
+
+
+
+context.moveTo(xArr[0], 1000 - yArr[0]);
+context.lineTo(xArr[1], 1000 - yArr[1]);
 
 context.stroke();
 
@@ -79,9 +92,13 @@ __features.map((item, i) => {
 })
 
 const buffer = canvas.toBuffer("image/png");
-fs.writeFileSync("image3.png", buffer);
+fs.writeFileSync("../images/lab2.png", buffer);
 
 
+
+
+
+// Метрики
 
 
 function minkowski_distance(x, y, p) {

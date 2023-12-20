@@ -1,14 +1,13 @@
 const fs = require('fs');
-const commonData = fs.readFileSync('date/commonData.txt', { encoding: 'utf8', flag: 'r' });
-const clasters = fs.readFileSync('date/clasters.txt', { encoding: 'utf8', flag: 'r' });
-
+const clasters = fs.readFileSync('../date/clasters.txt', { encoding: 'utf8', flag: 'r' });
 const arr = JSON.parse(clasters);
-
-item = "77FF33FF"
 
 const getRandomArbitrary = (min, max) => Math.random() * (max - min) + min;
 
 const checkPoint = ({ x1, x2, myX, myY, a, b }) => (((myX - x1) / a)**2) + (((myY - x2) / b)**2) <= 1;
+
+
+
 
 // генерация точек
 let index = 0;
@@ -17,7 +16,6 @@ while (index <= 100000) {
     points.push({ x1: getRandomArbitrary(0, 10).toFixed(2), x2: getRandomArbitrary(0, 10).toFixed(2) })
     ++index;
 }
-
 
 let verificationPoints = []
 arr.map((classItem, index) => {
@@ -40,6 +38,6 @@ arr.map((classItem, index) => {
 });
 
 let data = JSON.stringify(verificationPoints);
-fs.writeFileSync('result.json', data);
+fs.writeFileSync('../results/result.json', data);
 
 

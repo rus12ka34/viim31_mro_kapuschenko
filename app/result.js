@@ -2,7 +2,7 @@ const fs = require('fs');
 const { createCanvas } = require('canvas');
 
 
-const result = fs.readFileSync('result.json', { encoding: 'utf8', flag: 'r' });
+const result = fs.readFileSync('../results/result.json', { encoding: 'utf8', flag: 'r' });
 const resultJson = JSON.parse(result);
 
 const width = 1000;
@@ -25,4 +25,4 @@ resultJson.map((classItem) => {
 })
 
 const buffer = canvas.toBuffer("image/png");
-fs.writeFileSync("image.png", buffer);
+fs.writeFileSync("../images/lab1.png", buffer);
